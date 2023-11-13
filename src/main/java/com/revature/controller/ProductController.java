@@ -15,14 +15,16 @@ import java.util.List;
 // a method that takes in query parameters and returns a list of products based on the fields:
 // This Controller class should utilize the ProductService class
 public class ProductController {
+    private HttpServer server;
+
     private ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(HttpServer server,ProductService productService) {
         this.productService = productService;
+        this.server = server;
     }
 
-    // Create a constructor for this class that sets up the HttpServer: using createContext
-    public ProductController(HttpServer server) {
+    public void setEndpoints() {
         server.createContext("/products", this::getAllProducts);
         server.createContext("/products/filter", this::getProductsByQuery);
     }
