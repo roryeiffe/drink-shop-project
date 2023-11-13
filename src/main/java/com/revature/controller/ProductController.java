@@ -20,16 +20,15 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-}
 
     // Create a constructor for this class that sets up the HttpServer: using createContext
     public ProductController(HttpServer server) {
-        server.createContext(null, this::getAllProducts);
-        server.createContext(null, this::getProductsByQuery);
+        server.createContext("/products", this::getAllProducts);
+        server.createContext("/products/filter", this::getProductsByQuery);
     }
 
     // set up private methods: getAllProducts and getProductsByQuery
-    private void getAllProducts(HttpExchange exchange) {
+    private void getAllProducts(HttpExchange exchange) throws IOException{
         // get all products
         List<Product> products = productService.getAllProducts();
         // send the response back to the client
@@ -49,7 +48,7 @@ public class ProductController {
     }
 
 
-    private void getProductsByQuery(HttpExchange exchange) {
+    private void getProductsByQuery(HttpExchange exchange) throws IOException {
         // get the query parameters from the request, using the helper methods from the HttpHelper class
         Map<String, String> queryParams = HttpHelper.parseQueryParams(exchange.getRequestURI().getQuery());
         // get the products by query parameters
