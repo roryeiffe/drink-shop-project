@@ -3,12 +3,12 @@ package com.revature.util;
 import java.util.Map;
 import java.util.HashMap;
 
-// create a class that has helper methods for HTTP methods
+// TODO: Document the purpose & describe what this class does using JavaDocs
 public class HttpHelper {
-	
-	// Given a URL, parse out the query parameters and return as a map:
+
+    // TODO: Document the purpose & describe what this method does using JavaDocs
+    // TODO: Add unit tests for this method
     public static Map<String, String> parseQueryParams(String url) {
-        // parse out the query params and return the map:
         Map<String, String> queryParams = new HashMap<>();
         int idx = url.indexOf("?");
         if (idx != -1) {

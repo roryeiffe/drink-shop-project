@@ -2,9 +2,6 @@ package com.revature.model;
 
 import java.util.Objects;
 
-// Product class for drinks with name, price, calories, and category:
-// Fully encapsulate class with getters, setters, constructors, toString, hashCode, and equals
-// class Product {     // ORIGINAL AI CODE, DID NOT MAKE CLASS PUBLIC
 public class Product {
     private String name;
     private double price;
