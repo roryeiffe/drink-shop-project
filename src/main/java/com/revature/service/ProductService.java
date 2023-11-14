@@ -18,6 +18,10 @@ public class ProductService {
             products.add(new Product("Fuzzy Taun-Taun", 11.99, 300, "Cocktail"));
             products.add(new Product("Gin and Tonic", 9.99, 300, "Cocktail"));
         }
+        else if(hasName) {
+            products.add(new Product("Fuzzy Taun-Taun", 11.99, 300, "Cocktail"));            products.add(new Product("Fuzzy Taun-Taun", 11.99, 300, "Cocktail"));
+            products.add(new Product("Fuzzy Taun-Taun", 11.99, 400, "Coffee"));
+        }
         return products;        
     }
 

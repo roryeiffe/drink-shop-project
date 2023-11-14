@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.HashMap;
 
 // create a class that has helper methods for HTTP methods
-
 public class HttpHelper {
 	
 	// Given a URL, parse out the query parameters and return as a map:

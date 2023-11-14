@@ -52,7 +52,7 @@ public class ProductController {
 
     private void getProductsByQuery(HttpExchange exchange) throws IOException {
         // get the query parameters from the request, using the helper methods from the HttpHelper class
-        Map<String, String> queryParams = HttpHelper.parseQueryParams(exchange.getRequestURI().getQuery());
+        Map<String, String> queryParams = HttpHelper.parseQueryParams(exchange.getRequestURI().toString());
         // get the products by query parameters
         List<Product> products = productService.getProductsByQuery(queryParams);
         // send the response back to the client
