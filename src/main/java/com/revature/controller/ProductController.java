@@ -14,6 +14,7 @@ import java.util.List;
 // Create a Product Controller Class using HttpServer, include a constructor, a getAllProducts method, and 
 // a method that takes in query parameters and returns a list of products based on the fields:
 // This Controller class should utilize the ProductService class
+
 public class ProductController {
     private ProductService productService;
 
@@ -47,7 +48,6 @@ public class ProductController {
             }
         }
     }
-
 
     private void getProductsByQuery(HttpExchange exchange) {
         // get the query parameters from the request, using the helper methods from the HttpHelper class
