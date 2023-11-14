@@ -1,5 +1,7 @@
 package com.revature.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.Main;
 import com.revature.model.Product;
 import com.revature.service.ProductService;
 import com.revature.util.HttpHelper;
@@ -17,7 +19,7 @@ import java.util.List;
 
 public class ProductController {
     private HttpServer server;
-
+    private ObjectMapper objectMapper = new ObjectMapper();
     private ProductService productService;
 
     public ProductController(HttpServer server,ProductService productService) {
@@ -34,16 +36,16 @@ public class ProductController {
     private void getAllProducts(HttpExchange exchange) throws IOException{
         // get all products
         List<Product> products = productService.getAllProducts();
+        // Convert products to value as string through ObjectMapper
+        String payload = objectMapper.writeValueAsString(products);
+
         // send the response back to the client
         if (products == null) {
-            exchange.sendResponseHeaders(404, 0);
+            exchange.sendResponseHeaders(404, payload.getBytes().length);
         } else {
-            exchange.sendResponseHeaders(200, 0);
+            exchange.sendResponseHeaders(200, payload.getBytes().length);
             try (OutputStream os = exchange.getResponseBody()) {
-                os.write(products.toString().getBytes());
-                os.flush();
-                os.close();
-                exchange.close();
+                os.write(payload.getBytes());
             } catch (IOException e) {
                 e.printStackTrace();    
             }
@@ -55,22 +57,20 @@ public class ProductController {
         Map<String, String> queryParams = HttpHelper.parseQueryParams(exchange.getRequestURI().toString());
         // get the products by query parameters
         List<Product> products = productService.getProductsByQuery(queryParams);
+        // Convert products to value as string through ObjectMapper
+        String payload = objectMapper.writeValueAsString(products);
         // send the response back to the client
         if (products == null) {
-            exchange.sendResponseHeaders(404, 0);
+            exchange.sendResponseHeaders(404, payload.getBytes().length);
         } else {
-            exchange.sendResponseHeaders(200, 0);
+            exchange.sendResponseHeaders(200, payload.getBytes().length);
             try (OutputStream os = exchange.getResponseBody()) {
-                os.write(products.toString().getBytes());
+                os.write(payload.getBytes());
                 os.flush();
-                os.close();
                 exchange.close();
             } catch (IOException e) {
                 e.printStackTrace();    
             }   
         }
-
     }
-    
-
 }

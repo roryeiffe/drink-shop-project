@@ -13,6 +13,8 @@ public class ConnectionFactory {
 		super();
 	}
 
+
+
 	public static ConnectionFactory getInstance() {
 		return cf;
 	}
@@ -21,11 +23,14 @@ public class ConnectionFactory {
 		Connection conn = null;
 
 		try {
-			conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/project0", "sa", "");
+			Class.forName("org.h2.Driver");
+			conn = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
-		return conn;
+        return conn;
 	}
 }

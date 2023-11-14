@@ -1,6 +1,6 @@
 package com.revature;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.InetSocketAddress;
 
 import com.revature.controller.ProductController;
@@ -27,6 +27,8 @@ public class Main {
         new ProductController(server, new ProductService(new ProductRepository())).setEndpoints();
 
         server.start();
+        createProductsTable();
+        createProducts();
 
     }
 
@@ -35,10 +37,11 @@ public class Main {
     // This method would be called from the main method.
     public static void createProductsTable() {
         Connection conn = ConnectionFactory.getInstance().getConnection();
-        String sql = "CREATE TABLE products (id SERIAL PRIMARY KEY, name VARCHAR(255), price DECIMAL(10,2))";
+        String sql = "CREATE TABLE IF NOT EXISTS product (name VARCHAR(255) PRIMARY KEY, price DECIMAL(10,2), calories INT, category VARCHAR(255))";
         try {
             Statement stmt = conn.createStatement();
             stmt.execute(sql);
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,20 +49,50 @@ public class Main {
         // Create another static method that would generate a list of 25 products for our users to query
         // when the application is initialized.
         // This method would be called from the main method.
-        public static void createProducts () {
+        public static void createProducts () throws IOException {
+            // Create a list of products
+            ArrayList<Product> products = new ArrayList<>();
+
+            // Read a CSV file and create a list of products
+            BufferedReader  reader = new BufferedReader(new FileReader(new File("src/main/resources/drink-shop-db.csv")));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+                products.add(new Product(values[0], Double.parseDouble(values[1]), Integer.parseInt(values[2]), values[3]));
+            }
+
             Connection conn = ConnectionFactory.getInstance().getConnection();
-            String sql = "INSERT INTO products (name, price) VALUES (?, ?)";
+            String sql = "INSERT INTO product (name, price, calories, category) VALUES (?, ?, ?, ?)";
             try {
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                for (int i = 1; i <= 25; i++) {
-                    stmt.setString(1, "Product " + i);
-                    stmt.setDouble(2, (double) i);
-                    stmt.executeUpdate();
+                PreparedStatement  ps = conn.prepareStatement(sql);
+                for (Product product : products) {
+                    System.out.println(product.getName());
+                    ps.setString(1, product.getName());
+                    ps.setDouble(2, product.getPrice());
+                    ps.setInt(3, product.getCalories());
+                    ps.setString(4, product.getCategory());
+                    ps.executeUpdate();
                 }
+
+                conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
 
+        // Create a method to drop the table from the h2 database
+        public static void dropTable() {
+        Connection conn = ConnectionFactory.getInstance().getConnection();
+            String sql = "DROP TABLE product";
+            try {
+                Statement stmt = conn.createStatement();
+                stmt.execute(sql);
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Table dropped successfully");
+            System.exit(0);
+        }
 
     }
