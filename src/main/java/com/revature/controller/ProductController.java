@@ -15,21 +15,22 @@ import java.util.List;
 // a method that takes in query parameters and returns a list of products based on the fields:
 // This Controller class should utilize the ProductService class
 public class ProductController {
+    private HttpServer server;
+
     private ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(HttpServer server,ProductService productService) {
         this.productService = productService;
+        this.server = server;
     }
-}
 
-    // Create a constructor for this class that sets up the HttpServer: using createContext
-    public ProductController(HttpServer server) {
-        server.createContext(null, this::getAllProducts);
-        server.createContext(null, this::getProductsByQuery);
+    public void setEndpoints() {
+        server.createContext("/products", this::getAllProducts);
+        server.createContext("/products/filter", this::getProductsByQuery);
     }
 
     // set up private methods: getAllProducts and getProductsByQuery
-    private void getAllProducts(HttpExchange exchange) {
+    private void getAllProducts(HttpExchange exchange) throws IOException{
         // get all products
         List<Product> products = productService.getAllProducts();
         // send the response back to the client
@@ -49,9 +50,9 @@ public class ProductController {
     }
 
 
-    private void getProductsByQuery(HttpExchange exchange) {
+    private void getProductsByQuery(HttpExchange exchange) throws IOException {
         // get the query parameters from the request, using the helper methods from the HttpHelper class
-        Map<String, String> queryParams = HttpHelper.parseQueryParams(exchange.getRequestURI().getQuery());
+        Map<String, String> queryParams = HttpHelper.parseQueryParams(exchange.getRequestURI().toString());
         // get the products by query parameters
         List<Product> products = productService.getProductsByQuery(queryParams);
         // send the response back to the client
