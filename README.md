@@ -1,5 +1,5 @@
 # HELP! The developers forgot to document and test this application!
-Please make sure to read through the following instructions thoroughly. **NOTE** One of them is to replace the documentation of this `README.md` file. 
+Please make sure to read through the following instructions thoroughly. **NOTE** One of them is to replace the documentation of this `README.md` file. Return to the `main` branch on GitHub to keep these instructions after replacing the contents of this markdown.
 
 ## Instructions
 
