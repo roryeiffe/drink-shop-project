@@ -14,7 +14,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-// TODO: Document the purpose & describe what this class does using JavaDocs
+/**
+ * The ProductController class is responsible for handling HTTP requests related to products.
+ * It defines endpoints for retrieving all products and filtering products based on query parameters.
+ * This class uses an instance of ProductService to fetch product data and ObjectMapper to convert product data to JSON format.
+ */
 public class ProductController {
     private HttpServer server;
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -25,13 +29,21 @@ public class ProductController {
         this.server = server;
     }
 
-    // TODO: Document the purpose & describe what this method does using JavaDocs
+    /**
+     * Sets up the endpoints for this controller.
+     * Currently, it creates two contexts: "/products" for getting all products and "/products/filter" for getting products based on query parameters.
+     */
     public void setEndpoints() {
         server.createContext("/products", this::getAllProducts);
         server.createContext("/products/filter", this::getProductsByQuery);
     }
 
-    // TODO: Document the purpose & describe what this method does using JavaDocs
+    /**
+     * Handles the GET request to fetch all products.
+     * It uses the ProductService to fetch all products and then sends the products as a JSON response.
+     * If no products are found, it sends a 404 response.
+     * @param exchange the HttpExchange representing the HTTP request and response.
+     */
     private void getAllProducts(HttpExchange exchange) {
         List<Product> products = productService.getAllProducts();
         String payload = null;
@@ -52,8 +64,14 @@ public class ProductController {
         }
     }
 
-    // TODO: Document the purpose & describe what this method does using JavaDocs
-    private void getProductsByQuery(HttpExchange exchange) throws IOException {
+    /**
+     * Handles the GET request to fetch products based on query parameters.
+     * It parses the query parameters from the request URL, uses the ProductService to fetch matching products, and then sends the products as a JSON response.
+     * If no matching products are found, it sends a 404 response.
+     * @param exchange the HttpExchange representing the HTTP request and response.
+     * @throws IOException if an I/O error occurs.
+     */
+    void getProductsByQuery(HttpExchange exchange) throws IOException {
         Map<String, String> queryParams = HttpHelper.parseQueryParams(exchange.getRequestURI().toString());
         List<Product> products = productService.getProductsByQuery(queryParams);
 
