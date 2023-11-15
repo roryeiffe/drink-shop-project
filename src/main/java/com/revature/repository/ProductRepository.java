@@ -17,7 +17,7 @@ public class ProductRepository {
 	public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-            String sql = "SELECT * FROM products";
+            String sql = "SELECT * FROM product";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) throw new RuntimeException("No products found");
@@ -25,7 +25,7 @@ public class ProductRepository {
                 products.add(new Product(rs.getString("name"), rs.getDouble("price"), rs.getInt("calories"), rs.getString("category")));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return products;
 
@@ -36,7 +36,7 @@ public class ProductRepository {
         List<Product> products = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-            String sql = "SELECT * FROM products WHERE LOWER(name) LIKE lower(?)";
+            String sql = "SELECT * FROM product WHERE LOWER(name) LIKE lower(?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, "%" + name + "%");
 

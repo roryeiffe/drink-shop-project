@@ -1,5 +1,6 @@
 package com.revature.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.Main;
 import com.revature.model.Product;
@@ -31,19 +32,23 @@ public class ProductController {
     }
 
     // TODO: Document the purpose & describe what this method does using JavaDocs
-    private void getAllProducts(HttpExchange exchange) throws IOException{
+    private void getAllProducts(HttpExchange exchange) {
         List<Product> products = productService.getAllProducts();
-        String payload = objectMapper.writeValueAsString(products);
+        String payload = null;
+        try {
+            payload = objectMapper.writeValueAsString(products);
 
-        if (products == null) {
-            exchange.sendResponseHeaders(404, 0);
-        } else {
-            exchange.sendResponseHeaders(200, payload.getBytes().length);
-            try (OutputStream os = exchange.getResponseBody()) {
-                os.write(payload.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();    
+
+            if (products == null) {
+                exchange.sendResponseHeaders(404, 0);
+            } else {
+                exchange.sendResponseHeaders(200, payload.getBytes().length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(payload.getBytes());
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
