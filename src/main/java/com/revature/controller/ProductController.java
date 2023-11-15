@@ -1,8 +1,6 @@
 package com.revature.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.Main;
 import com.revature.model.Product;
 import com.revature.service.ProductService;
 import com.revature.util.HttpHelper;
@@ -29,6 +27,7 @@ public class ProductController {
         this.server = server;
     }
 
+
     /**
      * Sets up the endpoints for this controller.
      * Currently, it creates two contexts: "/products" for getting all products and "/products/filter" for getting products based on query parameters.
@@ -37,6 +36,7 @@ public class ProductController {
         server.createContext("/products", this::getAllProducts);
         server.createContext("/products/filter", this::getProductsByQuery);
     }
+
 
     /**
      * Handles the GET request to fetch all products.
@@ -64,6 +64,7 @@ public class ProductController {
         }
     }
 
+
     /**
      * Handles the GET request to fetch products based on query parameters.
      * It parses the query parameters from the request URL, uses the ProductService to fetch matching products, and then sends the products as a JSON response.
@@ -71,7 +72,7 @@ public class ProductController {
      * @param exchange the HttpExchange representing the HTTP request and response.
      * @throws IOException if an I/O error occurs.
      */
-    void getProductsByQuery(HttpExchange exchange) throws IOException {
+    private void getProductsByQuery(HttpExchange exchange) throws IOException {
         Map<String, String> queryParams = HttpHelper.parseQueryParams(exchange.getRequestURI().toString());
         List<Product> products = productService.getProductsByQuery(queryParams);
 
