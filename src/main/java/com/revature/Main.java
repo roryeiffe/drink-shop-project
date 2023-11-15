@@ -1,20 +1,12 @@
 package com.revature;
 
-import java.io.*;
-import java.net.InetSocketAddress;
-
 import com.revature.controller.ProductController;
-import com.revature.service.ProductService;
-import com.revature.model.Product;
 import com.revature.repository.ProductRepository;
-import com.revature.util.ConnectionFactory;
+import com.revature.service.ProductService;
 import com.sun.net.httpserver.HttpServer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.net.InetSocketAddress;
 
 public class Main {
     public static void main(String[] args) throws IOException {
