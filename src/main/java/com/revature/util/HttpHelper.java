@@ -3,6 +3,7 @@ package com.revature.util;
 import java.util.Map;
 import java.util.HashMap;
 
+
 /**
  * The HttpHelper class is a utility class that provides helper methods for handling HTTP-related tasks.
  * In the current context, it provides a method to parse the query parameters from a given URL.
@@ -17,6 +18,7 @@ public class HttpHelper {
      * @param url the URL string to parse the query parameters from.
      * @return a Map of query parameters where the key is the parameter name and the value is the parameter value.
      */
+
     public static Map<String, String> parseQueryParams(String url) {
         Map<String, String> queryParams = new HashMap<>();
         int idx = url.indexOf("?");
@@ -25,7 +27,13 @@ public class HttpHelper {
             String[] pairs = query.split("&");
             for (String pair : pairs) {
                 String[] keyValue = pair.split("=");
-                queryParams.put(keyValue[0], keyValue[1]);
+                // The code checks to see if there is in fact a value on the right side of
+                // the equals sign and otherwise places an empty string as the map value
+                try {
+                    queryParams.put(keyValue[0], keyValue[1]);
+                } catch (IndexOutOfBoundsException e) {
+                    queryParams.put(keyValue[0], "");
+                }
             }
         }
         return queryParams;

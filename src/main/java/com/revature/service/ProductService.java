@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * The ProductService class is responsible for handling product-related business logic.
  * It uses an instance of ProductRepository to fetch product data from the database.
@@ -18,7 +19,6 @@ public class ProductService {
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-
 
     /**
      * Fetches products from the database based on the provided query parameters, using the ProductRepository.
