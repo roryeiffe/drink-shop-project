@@ -1,8 +1,6 @@
 package com.revature.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.Main;
 import com.revature.model.Product;
 import com.revature.service.ProductService;
 import com.revature.util.HttpHelper;
@@ -14,7 +12,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-// TODO: Document the purpose & describe what this class does using JavaDocs
 public class ProductController {
     private HttpServer server;
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -25,13 +22,11 @@ public class ProductController {
         this.server = server;
     }
 
-    // TODO: Document the purpose & describe what this method does using JavaDocs
     public void setEndpoints() {
         server.createContext("/products", this::getAllProducts);
         server.createContext("/products/filter", this::getProductsByQuery);
     }
 
-    // TODO: Document the purpose & describe what this method does using JavaDocs
     private void getAllProducts(HttpExchange exchange) {
         List<Product> products = productService.getAllProducts();
         String payload = null;
@@ -52,7 +47,6 @@ public class ProductController {
         }
     }
 
-    // TODO: Document the purpose & describe what this method does using JavaDocs
     private void getProductsByQuery(HttpExchange exchange) throws IOException {
         Map<String, String> queryParams = HttpHelper.parseQueryParams(exchange.getRequestURI().toString());
         List<Product> products = productService.getProductsByQuery(queryParams);

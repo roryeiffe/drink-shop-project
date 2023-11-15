@@ -10,10 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Document the purpose & describe what this class does using JavaDocs
 public class ProductRepository {
 
-    // TODO: Document the purpose & describe what this method does using JavaDocs
 	public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -31,7 +29,6 @@ public class ProductRepository {
 
     }
 
-    // TODO: Document the purpose & describe what this method does using JavaDocs
     public List<Product> findByName(String name) {
         List<Product> products = new ArrayList<>();
 
