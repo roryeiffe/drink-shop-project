@@ -10,10 +10,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Document the purpose & describe what this class does using JavaDocs
+/**
+ * The ProductRepository class is responsible for interacting with the database to fetch product data.
+ * It uses the ConnectionFactory to establish a connection with the database and executes SQL queries to fetch data.
+ * The data fetched from the database is then used to create Product objects which are returned by the methods.
+ */
 public class ProductRepository {
 
-    // TODO: Document the purpose & describe what this method does using JavaDocs
+    /**
+     * Fetches all products from the database.
+     * It establishes a connection with the database, executes a SQL query to fetch all products, and then creates Product objects from the fetched data,
+     * inserting them into the 'products' ArrayList.
+     * @return a List of Product objects representing all products in the database.
+     */
 	public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -31,7 +40,13 @@ public class ProductRepository {
 
     }
 
-    // TODO: Document the purpose & describe what this method does using JavaDocs
+    /**
+     * Fetches products from the database based on the product name.
+     * It establishes a connection with the database, executes a SQL query to fetch products with a name matching the provided name,
+     * and then creates Product objects from the fetched data, inserting them into the 'products' ArrayList.
+     * @param name the name of the product to fetch from the database.
+     * @return a List of Product objects representing the products with a name matching the provided name.
+     */
     public List<Product> findByName(String name) {
         List<Product> products = new ArrayList<>();
 
