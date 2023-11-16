@@ -3,7 +3,6 @@ package com.revature.service;
 import com.revature.model.Product;
 import com.revature.repository.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,6 @@ public class ProductService {
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-
 
     // TODO: Document the purpose & describe what this method does using JavaDocs
     // TODO: Add unit tests for this method

@@ -12,8 +12,6 @@ public class ConnectionFactory {
 		super();
 	}
 
-
-
 	public static ConnectionFactory getInstance() {
 		return cf;
 	}
@@ -24,11 +22,9 @@ public class ConnectionFactory {
 		try {
 			Class.forName("org.h2.Driver");
 			conn = DriverManager.getConnection("jdbc:h2:mem:test;INIT=runscript from 'src/main/resources/create.sql'\\;runscript from 'src/main/resources/init.sql'", "sa", "");
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+		}
 
         return conn;
 	}

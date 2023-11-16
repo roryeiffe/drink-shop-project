@@ -1,18 +1,16 @@
 package com.revature.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.Main;
 import com.revature.model.Product;
 import com.revature.service.ProductService;
 import com.revature.util.HttpHelper;
-import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpServer;
 
-import java.util.Map;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 // TODO: Document the purpose & describe what this class does using JavaDocs
 public class ProductController {
